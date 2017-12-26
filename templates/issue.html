@@ -14,7 +14,7 @@
 						<div class="input-group-addon">
 							<i>Time</i>
 						</div>
-						<input type="hidden" id="issue_id" value="{{issue.id}}"></input>
+						<input type="hidden" id="event_id" value="{{issue.eventid}}"></input>
 						<p class="form-control">{{issue.clock}}</p>
 					</div>
 				</div>
@@ -43,9 +43,8 @@
 							<i>Type</i>
 						</div>
 						<select id="sel" class="form-control">
-							{% for t in types %}
-							<option value="{{t.id}}">{{t.name}}</option>
-							{% end %}
+							<option value="1">确认</option>
+							<option value="2">忽略</option>
 						</select>
 					</div>
 				</div>

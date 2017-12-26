@@ -25,11 +25,14 @@ class AlertBlockModel(BaseModel):
 
 
 
-class RestartHostsModel(BaseModel):
+class AlertIgnore(BaseModel):
 
 	id = peewee.PrimaryKeyField()
-	host_ip = peewee.CharField(max_length = 20)
-	uptime = peewee.IntergerField()
+	createtime = peewee.IntegerField(default = int(time.time()))
+	uptime = peewee.IntegerField(default = int(time.time()))
+	trigger_id = peewee.IntegerField()
+	ignore_to = peewee.IntegerField()
+	creator = peewee.CharField(max_length = 50)
 
 	class Meta:
-		db_table = 't_restart_hosts'
+		db_table = 't_alert_ignore'

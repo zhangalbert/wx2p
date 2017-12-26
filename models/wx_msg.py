@@ -34,7 +34,7 @@ class WxMsgStats(BaseModel):
 	host = peewee.CharField(max_length = 100)
 	ip = peewee.CharField(max_length = 20)
 	hostname = peewee.CharField(max_length = 100)
-	hostid = peewee.IntegerField(default = 0)
+	trigger_id = peewee.IntegerField(default = 0)
 	
 	
 	class Meta:

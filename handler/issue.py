@@ -11,20 +11,21 @@ import datetime
 
 import handler.base
 from models.issue import IssueTypeModel
-from models.wx_msg import WxMsgSendDetailModel
+from models.alert import AlertIgnore
+from models.wx_msg import WxMsgStats, WxMsgSendDetailModel
 
 
 class IssueHandler(handler.base.BaseHandler):
 
 	def initialize(self):
 		super(IssueHandler, self).initialize()
-		self.wxModel = WxMsgSendDetailModel
+		self.wxModel = WxMsgStats()
 		self.isModel = IssueTypeModel
 
-	def get(self, issue_id):
-		ft = self.wxModel.id == issue_id
+	def get(self, event_id):
+		ft = WxMsgStats.eventid == event_id
 		try:
-			issue = self.wxModel.get(ft)
+			issue = WxMsgStats.get(ft)
 
 			clock = int(issue.clock)
 			clock = datetime.datetime.fromtimestamp(clock).strftime('%Y-%m-%d %H:%M:%S')
@@ -35,19 +36,26 @@ class IssueHandler(handler.base.BaseHandler):
 			issue = None
 			raise
 		
-		self.render('issue.html', issue = issue, types = types)
+		self.render('issue.html', issue = issue, types = types, title = 'Confirm')
 
 
-	def post(self, issue_id):
-		type_id = self.get_argument('type_id')
+	def post(self, event_id):
+		process_status = self.get_argument('process_status')
 		
-		ft = self.wxModel.id == issue_id
-		issue = self.wxModel.get(ft)
-		issue.issue_type_id = type_id
+		ft = WxMsgStats.eventid == event_id
+		issue = WxMsgStats.get(ft)
 		issue.uptime = int(time.time())
+		issue.process_status = process_status
 
 		try:
 			issue.save()
+			
+			if process_status in [2, '2']:
+				ignore_to = self.get_argument('ignore_to')
+				am = AlertIgnore()
+				am.creator = self.userid
+				am.trigger_id = iss.trigger_id
+				am.save()
 			ret = dict(errCode = 0, errMsg = '')
 		except Exception, e:
 			ret = dict(errCode = 110, errMsg = str(e))

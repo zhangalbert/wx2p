@@ -1,12 +1,12 @@
 $(function(){
 	$("#commit").on('click', function(){
-		var issue_id = $("#issue_id").val();
-		var type_id = $("#sel").val();
+		var event_id = $("#event_id").val();
+		var ps = $("#sel").val();
 
 		$.ajax({
-			url: "/issue/"+issue_id,
+			url: "/issue/"+event_id,
 			type: "post",
-			data: {type_id: type_id},
+			data: {process_status: ps},
 			dataType: "json",
 			success: function(data){
 				if (data.errCode == 0){

@@ -67,9 +67,10 @@ class ApiHandler(BaseHandler):
 		dt = self.get_argument("dt")
 		eventid = self.get_argument("eventid")
 		status = self.get_argument("status")
+		severity = self.get_argument("severity")
 
 		tok = self._get_tts_tok()
-		data = dict(host = host, content = content, dt = dt, eventid = eventid, status = status, tok= tok, is_sound = 1)
+		data = dict(host = host, content = content, dt = dt, eventid = eventid, status = status, tok= tok, is_sound = 1, severity = severity, duration = '5s')
 		logging.info(json.dumps(data))
 
 		ret = self._redis.publish('alert_channel', json.dumps(data))
