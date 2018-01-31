@@ -48,7 +48,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
 	def _is_pass_outh(self):
 		uri = self.request.uri
-		white_list = ['/sendText', '/sendTextAsync', '/ws', '/wsapi', '/eventList', '/pushAlert']
+		white_list = ['/sendText', '/sendTextAsync', '/ws', '/wsapi', '/eventList', '/pushAlert', '/test']
 		return uri in white_list
 
 	

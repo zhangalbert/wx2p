@@ -61,8 +61,8 @@ class SendTextHandler(handler.base.BaseHandler):
 
 		users = user_str.split(',') if not isinstance(user_str, list) else user_str
 		
-		if self._redis and self._redis.get('add_link') and status in [0, '0']:
-			link_str = "<a href='http://%s/issue/%s'>Click</a>" % ("http://alert.ane56.com", event_id)
+		if self._redis and self._redis.get('add_link') and status in [0, '0'] and 'heruihong' in users:
+			link_str = "<a style=\"color:red;\">Click</a>"
 			trigger_name = '%s %s' % (trigger_name, link_str)
 		
 		if status in [1, '1']:

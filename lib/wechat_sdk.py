@@ -40,7 +40,7 @@ class WeChatEnterprise():
 	
 	def __post(self, url, data):
 		#header = {"content-type": "application/json"}
-		xx = json.dumps(data).decode('unicode-escape').encode("utf-8")
+		xx = json.dumps(data)#.decode('unicode-escape').encode("utf-8")
 		logging.info(xx)
 		#resp = r.post(url, data=json.dumps(data).decode('unicode-escape').encode("utf-8")).json()
 		resp = r.post(url, data = xx).json()
@@ -61,6 +61,7 @@ class WeChatEnterprise():
 				}
 		logging.info('Method send_msg2user > access_token: %s' % access_token)
 		messages = {"text": dict(content=content),
+				"textcard": kwargs,
 				"image": dict(media_id=kwargs.get("media_id")),
 				"voice": dict(media_id=kwargs.get("media_id")),
 				"video": dict(media_id=kwargs.get("media_id"), title=kwargs.get("title"),description=kwargs.get("descritption")),

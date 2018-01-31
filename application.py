@@ -69,7 +69,7 @@ urls = [
 	(r'/ws', 'handler.ws.SocketHandler'),
 	(r'/wsapi', 'handler.ws.ApiHandler'),
 	(r'/pushAlert', 'handler.ws.PushHistoryHandler'),
-	(r'/test', 'handler.wechat.TestHandler')
+	(r'/test', 'handler.test.TestHandler')
 ]
 
 app = tornado.web.Application(urls, cookie_secret = '0b507c24-0fd9-4adf-87f0-d9d72b229d57' ,**settings)

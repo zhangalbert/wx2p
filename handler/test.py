@@ -1,6 +1,7 @@
 # encoding=utf-8
 
 import json
+import time
 import logging
 
 import handler.base
@@ -22,16 +23,15 @@ class TestHandler(handler.base.BaseHandler):
 			return
 
 		users = user_str.split('|')
-		resp = wechat.send_wx_msg.delay(self.access_token, content, users)
-		
-		# Set event count
-		try:
-			self._set_event_count()
-		except:
-			pass
-
+		ts = self.ts2str(time.time())
+		#resp = wechat.send_wx_msg.delay(self.access_token, content, users)
+		kwargs = dict(title='告警消息',description = "<div class=\"gray\">"+ts+"</div><div class=\"highlight\">"+content+"</div>", url='https://m.baidu.com')
+		status, resp = self.wcep.send_msg2user(self.access_token, content, to_user=users, msg_type="textcard", to_ptmt=None, **kwargs)
 		self.write(str(resp))
 
+
+	def post(self):
+		self.get()
 
 
 class ModelTestHandler(handler.base.BaseHandler):
